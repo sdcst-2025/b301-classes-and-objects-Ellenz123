@@ -13,15 +13,35 @@ class Calc:
     rate = 0
     nPeriods = 0
 
-    def __init__(self):
+    def __init__(self,P,r,n):
+        self.principal=P
+        self.rate=r/100
+        self.nPeriods=n
         #more input parameters needed
         return
-
-    def interest(self,t):
-        return 
     
-    def amount(self,t):
-        return
+    def convert(self,t,unit):
+        if unit=="years":
+            return t
+        elif unit=="months":
+            return t/12
+        elif unit=="weeks":
+            return t/52
+        elif unit=="days":
+            return t/365
+        else:
+            return None
+
+    def interest(self,t,unit="years"):
+        years=self.convert(t,unit)
+        A=self.principal*(1+self.rate/self.nPeriods)**(self.nPeriods*years)
+        interest=A-self.principal
+        return round(interest,2)
+    
+    def amount(self,t,unit="years"):
+        years=self.convert(t,unit)
+        A=self.principal*(1+self.rate/self.nPeriods)**(self.nPeriods*years)
+        return round(A,2)
 
 a = Calc(P=1000,r=4,n=2)
 assert a.interest(3) == 126.16
@@ -29,4 +49,6 @@ assert a.amount(5) == 1218.99
 
 b = Calc(P=5000,r=5.25,n=12)
 assert b.interest(10) == 3442.62
+
+print("All tests passed")
 
